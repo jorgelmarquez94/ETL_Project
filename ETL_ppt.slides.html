@@ -13249,13 +13249,13 @@ a.anchor-link {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="EXTRACT---Exchange-Rate-(MXP/USD)-and-Tweets-CSVs-into-DF">EXTRACT - Exchange Rate (MXP/USD) and Tweets CSVs into DF<a class="anchor-link" href="#EXTRACT---Exchange-Rate-(MXP/USD)-and-Tweets-CSVs-into-DF">&#182;</a></h3><h3 id="Source:-http://www.banxico.org.mx/tipcamb/tipCamMIAction.do?idioma=sp">Source: <a href="http://www.banxico.org.mx/tipcamb/tipCamMIAction.do?idioma=sp">http://www.banxico.org.mx/tipcamb/tipCamMIAction.do?idioma=sp</a><a class="anchor-link" href="#Source:-http://www.banxico.org.mx/tipcamb/tipCamMIAction.do?idioma=sp">&#182;</a></h3><h3 id="Source:-http://www.trumptwitterarchive.com/">Source: <a href="http://www.trumptwitterarchive.com/">http://www.trumptwitterarchive.com/</a><a class="anchor-link" href="#Source:-http://www.trumptwitterarchive.com/">&#182;</a></h3>
+<h3 id="EXTRACT---Exchange-Rate-(MXP/USD),Tweets-CSVs-into-DF-and-Web-Scrapping">EXTRACT - Exchange Rate (MXP/USD),Tweets CSVs into DF and Web Scrapping<a class="anchor-link" href="#EXTRACT---Exchange-Rate-(MXP/USD),Tweets-CSVs-into-DF-and-Web-Scrapping">&#182;</a></h3><h3 id="Source:-http://www.banxico.org.mx/tipcamb/tipCamMIAction.do?idioma=sp">Source: <a href="http://www.banxico.org.mx/tipcamb/tipCamMIAction.do?idioma=sp">http://www.banxico.org.mx/tipcamb/tipCamMIAction.do?idioma=sp</a><a class="anchor-link" href="#Source:-http://www.banxico.org.mx/tipcamb/tipCamMIAction.do?idioma=sp">&#182;</a></h3><h3 id="Source:-http://www.trumptwitterarchive.com/">Source: <a href="http://www.trumptwitterarchive.com/">http://www.trumptwitterarchive.com/</a><a class="anchor-link" href="#Source:-http://www.trumptwitterarchive.com/">&#182;</a></h3>
 </div>
 </div>
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Read csv from given route</span>
@@ -13276,7 +13276,7 @@ a.anchor-link {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[16]:</div>
+    <div class="prompt output_prompt">Out[24]:</div>
 
 
 
@@ -13335,7 +13335,7 @@ obligaciones</th>
 </div></div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Create dataframe and display</span>
@@ -13353,7 +13353,7 @@ obligaciones</th>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[17]:</div>
+    <div class="prompt output_prompt">Out[25]:</div>
 
 
 
@@ -13420,13 +13420,289 @@ obligaciones</th>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="TRANSFORM---Reformat-date,-columns-renaming,-slice-tweets.">TRANSFORM - Reformat date, columns renaming, slice tweets.<a class="anchor-link" href="#TRANSFORM---Reformat-date,-columns-renaming,-slice-tweets.">&#182;</a></h3>
+<h3 id="Web-Scrapping:-Mass-Shootings-in-USA-2019">Web Scrapping: Mass Shootings in USA 2019<a class="anchor-link" href="#Web-Scrapping:-Mass-Shootings-in-USA-2019">&#182;</a></h3><h3 id="Source:-www.gunviolencearchive.org/reports/mass-shooting-(Several-different-pages-from-website)">Source: www.gunviolencearchive.org/reports/mass-shooting (Several different pages from website)<a class="anchor-link" href="#Source:-www.gunviolencearchive.org/reports/mass-shooting-(Several-different-pages-from-website)">&#182;</a></h3>
 </div>
 </div>
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[32]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Loop to scrape each table from different pages from the website</span>
+<span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">urls_list</span><span class="p">:</span>
+    <span class="c1">#Create a handle, page, to handle the contents of the website</span>
+    <span class="n">page</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="c1">#Store the contents of the website under doc</span>
+    <span class="n">doc</span> <span class="o">=</span> <span class="n">lh</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">page</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+    <span class="c1">#Parse data that are stored between &lt;tr&gt;..&lt;/tr&gt; of HTML</span>
+    <span class="n">tr_elements</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//tr&#39;</span><span class="p">)</span>
+
+    <span class="n">tr_elements</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//tr&#39;</span><span class="p">)</span>
+    <span class="c1">#Create empty list</span>
+    <span class="n">col</span><span class="o">=</span><span class="p">[]</span>
+    <span class="n">i</span><span class="o">=</span><span class="mi">0</span>
+    <span class="c1">#For each row, store each first element (header) and an empty list</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tr_elements</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="n">i</span><span class="o">+=</span><span class="mi">1</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">t</span><span class="o">.</span><span class="n">text_content</span><span class="p">()</span>
+        <span class="n">col</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">name</span><span class="p">,[]))</span>
+        
+    <span class="c1">#Since out first row is the header, data is stored on the second row onwards</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">tr_elements</span><span class="p">)):</span>
+        <span class="c1">#T is our j&#39;th row</span>
+        <span class="n">T</span><span class="o">=</span><span class="n">tr_elements</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+
+        <span class="c1">#If row is not of size 7, the //tr data is not from our table </span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">T</span><span class="p">)</span><span class="o">!=</span><span class="mi">7</span><span class="p">:</span>
+            <span class="k">break</span>
+
+        <span class="c1">#i is the index of our column</span>
+        <span class="n">i</span><span class="o">=</span><span class="mi">0</span>
+
+        <span class="c1">#Iterate through each element of the row</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">T</span><span class="o">.</span><span class="n">iterchildren</span><span class="p">():</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">t</span><span class="o">.</span><span class="n">text_content</span><span class="p">()</span> 
+            <span class="c1">#Check if row is empty</span>
+            <span class="k">if</span> <span class="n">i</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+            <span class="c1">#Convert any numerical value to integers</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">data</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="k">pass</span>
+            <span class="c1">#Append the data to the empty list of the i&#39;th column</span>
+            <span class="n">col</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="c1">#Increment i for the next column</span>
+            <span class="n">i</span><span class="o">+=</span><span class="mi">1</span>
+
+    <span class="n">Dict</span><span class="o">=</span><span class="p">{</span><span class="n">title</span><span class="p">:</span><span class="n">column</span> <span class="k">for</span> <span class="p">(</span><span class="n">title</span><span class="p">,</span><span class="n">column</span><span class="p">)</span> <span class="ow">in</span> <span class="n">col</span><span class="p">}</span>
+    <span class="n">df</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">Dict</span><span class="p">)</span>
+    <span class="n">df1</span> <span class="o">=</span> <span class="n">df1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div></div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="EXTRACT---Web-Scrapping-and-start-TRANSFORM-step">EXTRACT - Web Scrapping and start TRANSFORM step<a class="anchor-link" href="#EXTRACT---Web-Scrapping-and-start-TRANSFORM-step">&#182;</a></h3>
+</div>
+</div>
+</div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[36]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df1</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[36]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Incident Date</th>
+      <th>State</th>
+      <th>City Or County</th>
+      <th>Address</th>
+      <th># Killed</th>
+      <th># Injured</th>
+      <th>Operations</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>August 23, 2019</td>
+      <td>Missouri</td>
+      <td>Saint Louis</td>
+      <td>918 Union</td>
+      <td>1</td>
+      <td>3</td>
+      <td>View Incident\nView Source\n</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>August 23, 2019</td>
+      <td>Texas</td>
+      <td>Houston</td>
+      <td>4900 block of Southwind St</td>
+      <td>3</td>
+      <td>2</td>
+      <td>View Incident\nView Source\n</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>August 22, 2019</td>
+      <td>South Carolina</td>
+      <td>Columbia</td>
+      <td>851 Bush River Rd</td>
+      <td>2</td>
+      <td>2</td>
+      <td>View Incident\nView Source\n</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>August 22, 2019</td>
+      <td>California</td>
+      <td>Los Angeles</td>
+      <td>300 block of West Fifth St</td>
+      <td>0</td>
+      <td>4</td>
+      <td>View Incident\nView Source\n</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>August 20, 2019</td>
+      <td>Georgia</td>
+      <td>Atlanta</td>
+      <td>111 James P Brawley Dr SW</td>
+      <td>0</td>
+      <td>4</td>
+      <td>View Incident\nView Source\n</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div></div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[38]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mass_shooting_df</span> <span class="o">=</span> <span class="n">df1</span><span class="p">[[</span><span class="s2">&quot;Incident Date&quot;</span><span class="p">,</span> <span class="s2">&quot;# Killed&quot;</span><span class="p">]]</span>
+<span class="n">mass_shooting_df</span> <span class="o">=</span> <span class="n">mass_shooting_df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Incident Date&#39;</span><span class="p">:</span> <span class="s1">&#39;date&#39;</span><span class="p">,</span>
+                                                    <span class="s1">&#39;# Killed&#39;</span><span class="p">:</span> <span class="s1">&#39;number_killed&#39;</span><span class="p">})</span>
+<span class="n">mass_shooting_df</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">mass_shooting_df</span><span class="o">.</span><span class="n">date</span><span class="p">)</span>
+<span class="n">mass_shooting_df</span> <span class="o">=</span> <span class="n">mass_shooting_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;date&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">mass_shooting_df</span> <span class="o">=</span> <span class="n">mass_shooting_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">mass_shooting_df</span><span class="o">.</span><span class="n">number_killed</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)]</span>
+<span class="n">mass_shooting_df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">mass_shooting_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[38]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>date</th>
+      <th>number_killed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2019-01-02</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2019-01-03</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2019-01-04</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2019-01-13</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2019-01-15</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div></div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="TRANSFORM---Tweets-and-E/R:-Reformat-date,-columns-renaming,-slice-tweets.">TRANSFORM - Tweets and E/R: Reformat date, columns renaming, slice tweets.<a class="anchor-link" href="#TRANSFORM---Tweets-and-E/R:-Reformat-date,-columns-renaming,-slice-tweets.">&#182;</a></h3>
+</div>
+</div>
+</div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[39]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Transform date with format Y/M/D to Y-M-D </span>
@@ -13444,7 +13720,7 @@ obligaciones</th>
 </div></div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="prompt input_prompt">In&nbsp;[40]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Code lines thar run in Python v.3.6.8:</span>
@@ -13467,7 +13743,7 @@ obligaciones</th>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[19]:</div>
+    <div class="prompt output_prompt">Out[40]:</div>
 
 
 
@@ -13525,7 +13801,7 @@ obligaciones</th>
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[31]:</div>
+<div class="prompt input_prompt">In&nbsp;[41]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Clean data</span>
@@ -13549,7 +13825,7 @@ obligaciones</th>
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="prompt input_prompt">In&nbsp;[42]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Create new dataframe</span>
@@ -13579,19 +13855,19 @@ obligaciones</th>
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>C:\Users\Gonzalo\Anaconda3\lib\site-packages\ipykernel_launcher.py:12: FutureWarning: Comparing Series of datetimes with &#39;datetime.date&#39;.  Currently, the
+<pre>C:\Users\Gonzalo\Anaconda3\lib\site-packages\ipykernel_launcher.py:10: FutureWarning: Comparing Series of datetimes with &#39;datetime.date&#39;.  Currently, the
 &#39;datetime.date&#39; is coerced to a datetime. In the future pandas will
 not coerce, and a TypeError will be raised. To retain the current
 behavior, convert the &#39;datetime.date&#39; to a datetime with
 &#39;pd.Timestamp&#39;.
-  if sys.path[0] == &#39;&#39;:
+  # Remove the CWD from sys.path while we load stuff.
 </pre>
 </div>
 </div>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[21]:</div>
+    <div class="prompt output_prompt">Out[42]:</div>
 
 
 
@@ -13658,11 +13934,12 @@ behavior, convert the &#39;datetime.date&#39; to a datetime with
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[30]:</div>
+<div class="prompt input_prompt">In&nbsp;[47]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">union_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">new_tweets</span><span class="p">,</span> <span class="n">e_r_data_df</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;inner&#39;</span><span class="p">,</span> <span class="n">on</span> <span class="o">=</span> <span class="s1">&#39;date&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;date&#39;</span><span class="p">])</span>
-<span class="n">union_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">union_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">union_df</span><span class="p">,</span> <span class="n">mass_shooting_df</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">on</span> <span class="o">=</span> <span class="s1">&#39;date&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;date&#39;</span><span class="p">])</span>
+<span class="n">union_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">union_df</span><span class="p">[</span><span class="s1">&#39;number_killed&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">notnull</span><span class="p">()]</span>
 </pre></div>
 
     </div>
@@ -13675,7 +13952,7 @@ behavior, convert the &#39;datetime.date&#39; to a datetime with
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[30]:</div>
+    <div class="prompt output_prompt">Out[47]:</div>
 
 
 
@@ -13701,9 +13978,11 @@ behavior, convert the &#39;datetime.date&#39; to a datetime with
       <th>tweet</th>
       <th>retweet_count</th>
       <th>exchange_rate</th>
+      <th>number_killed</th>
     </tr>
     <tr>
       <th>date</th>
+      <th></th>
       <th></th>
       <th></th>
       <th></th>
@@ -13715,90 +13994,196 @@ behavior, convert the &#39;datetime.date&#39; to a datetime with
       <td>Mexico is doing a far better job than the Demo...</td>
       <td>24713.0</td>
       <td>19.2597</td>
-    </tr>
-    <tr>
-      <th>2019-06-27</th>
-      <td>Bipartisan Humanitarian Aid Bill for the South...</td>
-      <td>25170.0</td>
-      <td>19.2271</td>
+      <td>4.0</td>
     </tr>
     <tr>
       <th>2019-06-23</th>
       <td>I want to give the Democrats every last chance...</td>
       <td>24276.0</td>
       <td>18.9804</td>
-    </tr>
-    <tr>
-      <th>2019-06-19</th>
-      <td>Congratulations to President Lopez Obrador  M...</td>
-      <td>22674.0</td>
-      <td>19.1924</td>
+      <td>20.0</td>
     </tr>
     <tr>
       <th>2019-06-18</th>
       <td>Next week ICE will begin the process of removi...</td>
       <td>37105.0</td>
       <td>19.1487</td>
+      <td>2.0</td>
     </tr>
     <tr>
       <th>2019-06-08</th>
       <td>I would like to thank the President of Mexico ...</td>
       <td>29037.0</td>
       <td>19.3116</td>
+      <td>10.0</td>
     </tr>
     <tr>
       <th>2019-06-08</th>
       <td>Everyone very excited about the new deal with ...</td>
       <td>20616.0</td>
       <td>19.3116</td>
+      <td>10.0</td>
     </tr>
     <tr>
       <th>2019-06-08</th>
       <td>MEXICO HAS AGREED TO IMMEDIATELY BEGIN BUYING ...</td>
       <td>34068.0</td>
       <td>19.3116</td>
+      <td>10.0</td>
     </tr>
     <tr>
       <th>2019-06-08</th>
       <td>Mexico will try very hard and if they do that ...</td>
       <td>17182.0</td>
       <td>19.3116</td>
+      <td>10.0</td>
     </tr>
     <tr>
       <th>2019-06-08</th>
       <td>Brandon Judd National Border Patrol Council: ...</td>
       <td>16512.0</td>
       <td>19.3116</td>
+      <td>10.0</td>
     </tr>
     <tr>
       <th>2019-06-08</th>
       <td>While the reviews and reporting on our Border ...</td>
       <td>15815.0</td>
       <td>19.3116</td>
+      <td>10.0</td>
     </tr>
     <tr>
       <th>2019-06-08</th>
       <td>I am pleased to inform you that The United Sta...</td>
       <td>55891.0</td>
       <td>19.3116</td>
+      <td>10.0</td>
     </tr>
     <tr>
       <th>2019-06-08</th>
       <td>....stem the tide of Migration through Mexico ...</td>
       <td>38079.0</td>
       <td>19.3116</td>
+      <td>10.0</td>
     </tr>
     <tr>
       <th>2019-06-08</th>
       <td>I am pleased to inform you that The United Sta...</td>
       <td>2659.0</td>
       <td>19.3116</td>
+      <td>10.0</td>
     </tr>
     <tr>
       <th>2019-06-08</th>
       <td>....stem the tide of Migration through Mexico ...</td>
       <td>2319.0</td>
       <td>19.3116</td>
+      <td>10.0</td>
+    </tr>
+    <tr>
+      <th>2019-06-01</th>
+      <td>....U.S. in order to avoid paying the 25% Tari...</td>
+      <td>14273.0</td>
+      <td>19.6073</td>
+      <td>6.0</td>
+    </tr>
+    <tr>
+      <th>2019-06-01</th>
+      <td>...travesty that is taking place in allowing m...</td>
+      <td>17676.0</td>
+      <td>19.6073</td>
+      <td>6.0</td>
+    </tr>
+    <tr>
+      <th>2019-05-31</th>
+      <td>Saddened to hear about the loss of John Pinto ...</td>
+      <td>15563.0</td>
+      <td>19.2395</td>
+      <td>28.0</td>
+    </tr>
+    <tr>
+      <th>2019-05-31</th>
+      <td>90% of the Drugs coming into the United States...</td>
+      <td>29155.0</td>
+      <td>19.2395</td>
+      <td>28.0</td>
+    </tr>
+    <tr>
+      <th>2019-05-31</th>
+      <td>In order not to pay Tariffs if they start risi...</td>
+      <td>23128.0</td>
+      <td>19.2395</td>
+      <td>28.0</td>
+    </tr>
+    <tr>
+      <th>2019-05-31</th>
+      <td>Mexico has taken advantage of the United State...</td>
+      <td>22145.0</td>
+      <td>19.2395</td>
+      <td>28.0</td>
+    </tr>
+    <tr>
+      <th>2019-05-20</th>
+      <td>Starting Monday our great Farmers can begin do...</td>
+      <td>18326.0</td>
+      <td>19.0710</td>
+      <td>6.0</td>
+    </tr>
+    <tr>
+      <th>2019-05-01</th>
+      <td>Congress must change the Immigration Laws now ...</td>
+      <td>18078.0</td>
+      <td>19.6073</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>2019-04-30</th>
+      <td>The Coyotes and Drug Cartels are in total cont...</td>
+      <td>28276.0</td>
+      <td>18.9414</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>2019-03-31</th>
+      <td>The Democrats are allowing a ridiculous asylum...</td>
+      <td>26973.0</td>
+      <td>19.3793</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>2019-02-05</th>
+      <td>Tremendous numbers of people are coming up thr...</td>
+      <td>31694.0</td>
+      <td>19.0120</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>2019-02-03</th>
+      <td>With Caravans marching through Mexico and towa...</td>
+      <td>34810.0</td>
+      <td>19.2607</td>
+      <td>12.0</td>
+    </tr>
+    <tr>
+      <th>2019-02-03</th>
+      <td>With Caravans marching through Mexico and towa...</td>
+      <td>1332.0</td>
+      <td>19.2607</td>
+      <td>12.0</td>
+    </tr>
+    <tr>
+      <th>2019-01-19</th>
+      <td>Mexico is doing NOTHING to stop the Caravan wh...</td>
+      <td>32692.0</td>
+      <td>19.0630</td>
+      <td>14.0</td>
+    </tr>
+    <tr>
+      <th>2019-01-02</th>
+      <td>Mexico is paying for the Wall through the new ...</td>
+      <td>28559.0</td>
+      <td>19.1623</td>
+      <td>2.0</td>
     </tr>
   </tbody>
 </table>
@@ -13820,7 +14205,7 @@ behavior, convert the &#39;datetime.date&#39; to a datetime with
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="prompt input_prompt">In&nbsp;[57]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">connection_string</span> <span class="o">=</span> <span class="s2">&quot;postgres:postgres@localhost:5432/trump_vs_mex_db&quot;</span>
@@ -13834,7 +14219,7 @@ behavior, convert the &#39;datetime.date&#39; to a datetime with
 </div></div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="prompt input_prompt">In&nbsp;[58]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Confirm tables</span>
@@ -13851,7 +14236,7 @@ behavior, convert the &#39;datetime.date&#39; to a datetime with
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[24]:</div>
+    <div class="prompt output_prompt">Out[58]:</div>
 
 
 
@@ -13868,7 +14253,7 @@ behavior, convert the &#39;datetime.date&#39; to a datetime with
 </div></div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="prompt input_prompt">In&nbsp;[59]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">union_df</span><span class="o">.</span><span class="n">to_sql</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;trump_twitter&#39;</span><span class="p">,</span> <span class="n">con</span><span class="o">=</span><span class="n">engine</span><span class="p">,</span> <span class="n">if_exists</span><span class="o">=</span><span class="s1">&#39;append&#39;</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
@@ -13885,6 +14270,54 @@ behavior, convert the &#39;datetime.date&#39; to a datetime with
 <h3 id="VISUALIZATION">VISUALIZATION<a class="anchor-link" href="#VISUALIZATION">&#182;</a></h3>
 </div>
 </div>
+</div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[60]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;tab:red&#39;</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">autofmt_xdate</span><span class="p">()</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Retweet count (thousands)&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">data1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">labelcolor</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span>  <span class="c1"># instantiate a second axes that shares the same x-axis</span>
+<span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;tab:blue&#39;</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Exchange rate USD/MXN&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>  <span class="c1"># we already handled the x-label with ax1</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">data2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">labelcolor</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;..</span><span class="se">\\</span><span class="s2">ETL_Project</span><span class="se">\\</span><span class="s2">plot.png&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -13898,7 +14331,7 @@ behavior, convert the &#39;datetime.date&#39; to a datetime with
 </div>
 </div>
 
-</div></section></section>
+</div></div></section></section>
 </div>
 </div>
 
